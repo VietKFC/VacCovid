@@ -6,6 +6,9 @@ object ApiConstant {
     const val API_PARAM = "x-rapidapi-key"
     const val WORLD_URL = "world"
     const val CONTINENT_URL = "continent"
+    const val SIXMONTH_URL = "sixmonth"
+
+    const val SYMBOL_COUNTRY_PARAM = "symbol"
     const val CONTINENT_EURO_PARAM = "europe"
     const val CONTINENT_ASIA_PARAM = "asia"
     const val CONTINENT_SOUTHERN_PARAM = "southamerica"

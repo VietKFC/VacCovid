@@ -9,7 +9,10 @@ import com.example.vaccovid19.data.model.Country
 import com.example.vaccovid19.databinding.DialogCountryLayoutBinding
 import com.example.vaccovid19.utils.hide
 
-class CountryDialog(context: Context): Dialog(context) {
+class CountryDialog(
+    context: Context,
+    private val clickCountryItem: (Country) -> Unit
+) : Dialog(context) {
 
     private var binding: DialogCountryLayoutBinding? = null
     private val adapter = CountryAdapter(this::onClickCountryItem)
@@ -29,7 +32,10 @@ class CountryDialog(context: Context): Dialog(context) {
         binding?.let { setContentView(it.root) }
         setCancelable(true)
         window?.apply {
-            setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+            setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT
+            )
             setGravity(Gravity.CENTER)
         }
 
@@ -42,12 +48,13 @@ class CountryDialog(context: Context): Dialog(context) {
     }
 
     private fun onClickCountryItem(country: Country) {
-
+        clickCountryItem(country)
+        dismiss()
     }
 
     fun receivedData(countries: List<Country>) {
         adapter.submitList(countries)
-        if(countries.isNotEmpty()) {
+        if (countries.isNotEmpty()) {
             binding?.progressCountry?.hide()
         }
     }

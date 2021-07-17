@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.example.vaccovid19.base.BaseViewModel
 import com.example.vaccovid19.data.model.Country
+import com.example.vaccovid19.data.model.CountryPerDay
 import com.example.vaccovid19.data.repository.CountryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +17,16 @@ class CountryViewModel(private val countryRepo: CountryRepository) : BaseViewMod
     private val _continent = MutableLiveData<String>()
     private val _countries = MutableLiveData<List<Country>>(emptyList())
 
+    private val _symbol = MutableLiveData<String>()
+    private val _countryPerDay = MutableLiveData<List<CountryPerDay>>(emptyList())
+    val countryPerDay: LiveData<List<CountryPerDay>>
+        get() = _countryPerDay
+
     val countriesLiveData = Transformations.switchMap(_continent, this::getCountriesInContinent)
+
+    init {
+        Transformations.switchMap(_symbol , this::getCountryPerDay)
+    }
 
     private fun getCountriesInContinent(continent: String): LiveData<List<Country>> {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
@@ -26,7 +36,19 @@ class CountryViewModel(private val countryRepo: CountryRepository) : BaseViewMod
         return _countries
     }
 
+    private fun getCountryPerDay(symbol: String): LiveData<List<CountryPerDay>> {
+        viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+            _countryPerDay.postValue(countryRepo.getCountryPerDay(symbol))
+        }
+
+        return _countryPerDay
+    }
+
     fun setContinent(continent: String) {
         _continent.value = continent
+    }
+
+    fun setSymbolCountry(symbol: String) {
+        _symbol.value = symbol
     }
 }
