@@ -20,12 +20,11 @@ class CountryViewModel(private val countryRepo: CountryRepository) : BaseViewMod
     private val _symbol = MutableLiveData<String>()
     private val _countryPerDay = MutableLiveData<List<CountryPerDay>>(emptyList())
     val countryPerDay: LiveData<List<CountryPerDay>>
-        get() = _countryPerDay
-
-    val countriesLiveData = Transformations.switchMap(_continent, this::getCountriesInContinent)
+    val countriesLiveData: LiveData<List<Country>>
 
     init {
-        Transformations.switchMap(_symbol , this::getCountryPerDay)
+        countryPerDay = Transformations.switchMap(_symbol, this::getCountryPerDay)
+        countriesLiveData = Transformations.switchMap(_continent, this::getCountriesInContinent)
     }
 
     private fun getCountriesInContinent(continent: String): LiveData<List<Country>> {
@@ -38,7 +37,8 @@ class CountryViewModel(private val countryRepo: CountryRepository) : BaseViewMod
 
     private fun getCountryPerDay(symbol: String): LiveData<List<CountryPerDay>> {
         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
-            _countryPerDay.postValue(countryRepo.getCountryPerDay(symbol))
+            val list = countryRepo.getCountryPerDay(symbol)
+            _countryPerDay.postValue(list)
         }
 
         return _countryPerDay

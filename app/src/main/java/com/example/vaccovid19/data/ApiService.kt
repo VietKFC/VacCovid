@@ -9,12 +9,12 @@ import retrofit2.http.Path
 
 interface ApiService {
 
-    @GET(ApiConstant.WORLD_URL)
+    @GET("${ApiConstant.DATA_NPM_PARAM}/${ApiConstant.WORLD_URL}")
     suspend fun getWorldData(): List<World>
 
-    @GET("{${ApiConstant.CONTINENT_URL}}")
+    @GET("${ApiConstant.DATA_NPM_PARAM}/{${ApiConstant.CONTINENT_URL}}")
     suspend fun getCountriesInContinent(@Path(ApiConstant.CONTINENT_URL) continent: String): List<Country>
 
-    @GET("${ApiConstant.SIXMONTH_URL}/{${ApiConstant.SYMBOL_COUNTRY_PARAM}}")
+    @GET("${ApiConstant.DATA_OVID_PARAM}/${ApiConstant.SIXMONTH_URL}/{${ApiConstant.SYMBOL_COUNTRY_PARAM}}")
     suspend fun getCountryPerDay(@Path(ApiConstant.SYMBOL_COUNTRY_PARAM) symbol: String): List<CountryPerDay>
 }

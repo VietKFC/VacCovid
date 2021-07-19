@@ -37,11 +37,11 @@
             android:id="@+id/imageBack"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_8"
             android:background="?selectableItemBackground"
             android:contentDescription="@null"
             android:onClick="@{() -> clickListener.onClickBack()}"
-            android:padding="@dimen/dp_17"
+            android:padding="@dimen/dp_20"
             android:src="@drawable/ic_arrow"
             app:layout_constraintBottom_toBottomOf="@id/textCountryTitle"
             app:layout_constraintDimensionRatio="1:1"
@@ -52,11 +52,60 @@
             android:id="@+id/chartCountryData"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/dp_30"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
             android:orientation="vertical"
-            app:layout_constraintDimensionRatio="1:1"
+            android:visibility="invisible"
+            app:layout_constraintDimensionRatio="1:0.8"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textCountryTitle" />
+
+        <ProgressBar
+            android:id="@+id/progressCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/bg_circle_progress"
+            app:layout_constraintBottom_toBottomOf="@id/chartCountryData"
+            app:layout_constraintLeft_toLeftOf="@id/chartCountryData"
+            app:layout_constraintRight_toRightOf="@id/chartCountryData"
+            app:layout_constraintTop_toTopOf="@id/chartCountryData" />
+
+        <TextView
+            android:id="@+id/textTestPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_40"
+            android:text="@string/text_total_test"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/chartCountryData"
+            app:layout_constraintTop_toBottomOf="@id/chartCountryData" />
+
+        <ProgressBar
+            android:id="@+id/progressRecovered"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_8"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_15"
+            android:max="100"
+            android:progressDrawable="@drawable/progressbar_custom"
+            app:layout_constraintLeft_toLeftOf="@id/chartCountryData"
+            app:layout_constraintRight_toRightOf="@id/chartCountryData"
+            app:layout_constraintTop_toBottomOf="@id/textTestPercent"
+            app:progress="@{country.testPercent}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
+            android:text="@{String.valueOf(country.testPercent)}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_18"
+            app:layout_constraintRight_toRightOf="@id/progressRecovered"
+            app:layout_constraintTop_toBottomOf="@id/progressRecovered" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

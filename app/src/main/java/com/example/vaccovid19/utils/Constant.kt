@@ -2,8 +2,11 @@ package com.example.vaccovid19.utils
 
 object ApiConstant {
     const val BASE_URL =
-        "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/"
+        "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/"
     const val API_PARAM = "x-rapidapi-key"
+    const val DATA_NPM_PARAM = "npm-covid-data"
+    const val DATA_OVID_PARAM = "covid-ovid-data"
+
     const val WORLD_URL = "world"
     const val CONTINENT_URL = "continent"
     const val SIXMONTH_URL = "sixmonth"
